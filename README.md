@@ -71,10 +71,46 @@ Abnormal Lines:
 Just import `lib` package:
 
 ```go
-import sbAnalyzer "github.com/MyonKeminta/sysbench-analyzer/lib"
+import sa "github.com/MyonKeminta/sysbench-analyzer/lib"
 ```
 
 Note that the API might change in the future.
+
+Shortcut for detecting QPS dropping:
+
+```go
+threshold := 0.7
+// Read a stream to the end and analyze its content as sysbench output.
+// Lines that do not match the format will be ignored.
+// Returns a boolean value indicating whether the check passed. If check failed, the second return
+// value will be a string recording detailed failures, in the same format as the command line
+// tool's output.
+sa.CheckQPSDropFromSysbenchOutputStream(os.Stdin, threshold)
+// Similar as previous one but it analyzes a string rather than a stream.
+sa.CheckQPSDropFromSysbenchOutputText(str, threshold)
+```
+
+Full usage:
+
+```go
+// Create check rules. Currently only one rule `QPSDropRule` is implemented. It's easy to add more rules by
+// implementing the `Rule` interface.
+rule := sa.NewQPSDropRule(/*threshold*/ 0.7)
+// Create an analyzer. The second parameter means whether we should ignore lines that don't match the format.
+// If the second parameter is false, invalid lines will produce violations in the result, which will be
+// explained later.
+// An analyzer is stateless and can be reused.
+analyzer := sa.NewSysbenchAnalyzer([]sa.Rule{rule}, true)
+// Then use the analyzer to do checks.
+violations := analyzer.AnalyzeString(str)
+// or
+violations := analyzer.AnalyzeStream(os.Stdin)
+// or
+violations := analyzer.AnalyzeParsedRecords(records)
+// The return value `violations` is of type `[]Violation`. If all check was passed, it will be empty.
+// Otherwise each item in `violations` means a record violated a rule.
+```
+
 
 ## TODO:
 
