@@ -3,15 +3,125 @@
 
 [[projects]]
   branch = "master"
+  digest = "1:8fda70c57919d8b3eda9806c43d26ad27efd6049571b838f6351d4c4b9dd5767"
+  name = "github.com/ajstarks/svgo"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "6ce6a3bcf6cde6c5007887677ebd148ec30f42a4"
+
+[[projects]]
+  branch = "master"
+  digest = "1:7a6377256f670508711c56c25556d639e673c0fa0f519c5a758fdcbfc8af9ac8"
+  name = "github.com/golang/freetype"
+  packages = [
+    ".",
+    "raster",
+    "truetype",
+  ]
+  pruneopts = "UT"
+  revision = "e2365dfdc4a05e4b8299a783240d4a7d5a65d4e4"
+
+[[projects]]
+  digest = "1:db23aee6f0ff15fbcd0559d660f91d6b738baeeca46d953396b2fdcec93e1260"
+  name = "github.com/jung-kurt/gofpdf"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "14c1db30737a138f8d9797cffea58783892b2fae"
+  version = "v1.0.0"
+
+[[projects]]
+  branch = "master"
+  digest = "1:79d2dd4ecf0c5b24e0a372768fd523242098338ab4453b3422bfe6ef15627b88"
+  name = "github.com/llgcode/draw2d"
+  packages = [
+    ".",
+    "draw2dbase",
+    "draw2dimg",
+  ]
+  pruneopts = "UT"
+  revision = "f52c8a71aff06ab8df41843d33ab167b36c971cd"
+
+[[projects]]
+  branch = "master"
   digest = "1:0503a20c05af88acb169de2308c84d8df06ba94328ddd7a38085ebafe6aedfb7"
   name = "github.com/pingcap/check"
   packages = ["."]
   pruneopts = "UT"
   revision = "1c287c953996ab3a0bf535dba9d53d809d3dc0b6"
 
+[[projects]]
+  branch = "master"
+  digest = "1:47bcbdf2a60a0bdd142f07f60771078857310fd1ededeb03956add7c7f6bef33"
+  name = "golang.org/x/exp"
+  packages = ["rand"]
+  pruneopts = "UT"
+  revision = "d8bb7a16721e319e95865be2662b889387204776"
+
+[[projects]]
+  branch = "master"
+  digest = "1:cf4b554093dbce6983059e6dfaeef0cb4bf9e83e41ac0986c4cbe18a4e0c9b79"
+  name = "golang.org/x/image"
+  packages = [
+    "draw",
+    "font",
+    "math/f64",
+    "math/fixed",
+    "tiff",
+    "tiff/lzw",
+  ]
+  pruneopts = "UT"
+  revision = "991ec62608f3c0da01d400756917825d1e2fd528"
+
+[[projects]]
+  branch = "master"
+  digest = "1:7c8f59e5666f3b55525a5225da301eab8bb57c4fff6a3ae37d40bf1ee9d48e2f"
+  name = "gonum.org/v1/gonum"
+  packages = [
+    "blas",
+    "blas/blas64",
+    "blas/gonum",
+    "floats",
+    "internal/asm/c128",
+    "internal/asm/f32",
+    "internal/asm/f64",
+    "internal/math32",
+    "lapack",
+    "lapack/gonum",
+    "lapack/lapack64",
+    "mat",
+  ]
+  pruneopts = "UT"
+  revision = "056846ef7e3a092c17c486cc47d5bb736ae19fd8"
+
+[[projects]]
+  branch = "master"
+  digest = "1:67780051ad1fe4c6f3f8588cd76d19fda92c35e84425845293ba94459594c970"
+  name = "gonum.org/v1/plot"
+  packages = [
+    ".",
+    "palette",
+    "plotter",
+    "plotutil",
+    "tools/bezier",
+    "vg",
+    "vg/draw",
+    "vg/fonts",
+    "vg/vgeps",
+    "vg/vgimg",
+    "vg/vgpdf",
+    "vg/vgsvg",
+  ]
+  pruneopts = "UT"
+  revision = "5f3c436ce602d80b13f2936b6bf149515198d6a4"
+
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  input-imports = ["github.com/pingcap/check"]
+  input-imports = [
+    "github.com/pingcap/check",
+    "gonum.org/v1/plot",
+    "gonum.org/v1/plot/plotter",
+    "gonum.org/v1/plot/plotutil",
+  ]
   solver-name = "gps-cdcl"
   solver-version = 1

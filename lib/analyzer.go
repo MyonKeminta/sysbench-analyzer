@@ -20,7 +20,7 @@ func NewSysbenchAnalyzer(rules []Rule, ignoreInvalidLines bool) SysbenchAnalyzer
 	}
 }
 
-func (a *SysbenchAnalyzer) parseToEnd(reader io.Reader) ([]Record, []Violation) {
+func (a *SysbenchAnalyzer) ParseToEnd(reader io.Reader) ([]Record, []Violation) {
 	var records []Record
 	var violations []Violation
 
@@ -56,7 +56,7 @@ func (a *SysbenchAnalyzer) AnalyzeString(str string) []Violation {
 }
 
 func (a *SysbenchAnalyzer) AnalyzeStream(reader io.Reader) []Violation {
-	records, violations := a.parseToEnd(reader)
+	records, violations := a.ParseToEnd(reader)
 	violations = append(violations, a.AnalyzeParsedRecords(records)...)
 	return violations
 }
