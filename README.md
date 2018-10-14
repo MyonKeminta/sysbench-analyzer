@@ -22,7 +22,16 @@ make
 
 Then you can find the binary in `bin` directory.
 
-Currently the tool is very... shabby. It reads content from standard input and check if there is such a set of records (abnormal records) that all of them has lower QPS than 70% of the average value of others (normal records). Abnormal records is never more than half of all the records. All lines that don't match the expected format will be ignored. After analyzing it will print the analyze result to standard out.
+Currently the tool is very... shabby. 
+
+#### Checking sysbench output
+
+```bash
+$ ./sbanalyzer < file # or:
+$ ./sbanalyzer check < file
+```
+
+It reads content from standard input and check if there is such a set of records (abnormal records) that all of them has lower QPS than 70% of the average value of others (normal records). Abnormal records is never more than half of all the records. All lines that don't match the expected format will be ignored. After analyzing it will print the analyze result to standard out.
 
 For example, assume we have this content in a file:
 
@@ -65,6 +74,16 @@ Abnormal Lines:
 [ 12s ] thds: 256 tps: 0.00 qps: 0.00 (r/w/o: 0.00/0.00/0.00) lat (ms,95%): 0.00 err/s: 0.00 reconn/s: 0.00
   * The QPS (0.00) is less than 70.0% of the average QPS of normal records (44701.90)
 ```
+
+#### Plotting QPS as graph
+
+```bash
+$ ./sbanalyzer plot image.png < file
+```
+
+It will parse `file` and draw a QPS graph and save to image `image.png`. A typical example is as following:
+
+![plot-example](doc/plot-example.png)
 
 ### Use the API
 
