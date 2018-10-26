@@ -6,7 +6,7 @@ import (
 	"gonum.org/v1/plot/plotutil"
 )
 
-func PlotQPS(records []Record, imgWidth float64, imgHeight float64, imageFilePath string) error {
+func PlotQPS(records []Record, imageFilePath string) error {
 	p, err := plot.New()
 	if err != nil {
 		return err
