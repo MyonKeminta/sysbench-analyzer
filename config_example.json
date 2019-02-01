@@ -1,0 +1,9 @@
+{
+  "SlackToken": "xoxb-XXXXXXX....",
+  "SlackChannel": "#channel",
+  "Tag": "Sysbench Test",
+  "SysbenchCmdLine": "sysbench oltp_read_write --mysql-host=....   # May also be something like 'tail -f sysbench.log'",
+  "CheckLines": 50,
+  "QpsLowerLimit": 0.7,
+  "Loop": false
+}
