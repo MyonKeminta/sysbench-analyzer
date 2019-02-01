@@ -223,14 +223,6 @@ func longCheck(args []string) {
 		}
 		log.Printf("Process started")
 
-		go func() {
-			time.Sleep(time.Second)
-			err := cmd.Wait()
-			if err != nil {
-				notifier.put(fmt.Sprintf("Process didn't exits normally: %v", err))
-			}
-		}()
-
 		scanner := bufio.NewScanner(stdout)
 		outputChan := make(chan string)
 		go func() {
@@ -277,8 +269,10 @@ func longCheck(args []string) {
 		var lastReadTime time.Time
 		isStopped := false
 
+		previousRecordTime := int32(0)
+
 		for {
-			if (len(invalidText) > 0 && time.Since(lastReadTime) >= time.Second*2) || isStopped {
+			if len(invalidText) > 0 && (time.Since(lastReadTime) >= time.Second*2 || isStopped) {
 				notifier.put(fmt.Sprintf("Unexpected output: \n```\n%v\n```", invalidText))
 			}
 
@@ -290,13 +284,18 @@ func longCheck(args []string) {
 
 			if strings.HasPrefix(line, "SQL statistics") {
 				log.Printf("Sysbench finished")
+				records = []lib.Record{}
 				for {
 					remainingLine := <-outputChan
 					if remainingLine == "__EOF__" {
+						line = remainingLine
+						break
+					}
+					if _, err := lib.ParseRecord(remainingLine); err == nil {
+						line = remainingLine
 						break
 					}
 				}
-				break
 			}
 
 			if line == "__EOF__" {
@@ -316,9 +315,14 @@ func longCheck(args []string) {
 					invalidText += line
 				}
 				continue
-			} else {
-				hasValidOutput = true
 			}
+
+			hasValidOutput = true
+			if record.Second <= previousRecordTime {
+				log.Printf("Seems that sysbench has restarted here")
+				records = []lib.Record{}
+			}
+			previousRecordTime = record.Second
 
 			records = append(records, record)
 
@@ -341,6 +345,12 @@ func longCheck(args []string) {
 		}
 
 		<-errReaderStopChan
+
+		err = cmd.Wait()
+		if err != nil {
+			notifier.put(fmt.Sprintf("Process didn't exits normally: %v", err))
+		}
+
 		if !cfg.Loop {
 			break
 		}
